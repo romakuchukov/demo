@@ -8,6 +8,11 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import C from './Context'
 
+import { useSelector } from 'react-redux';
+
+function Counted() {
+    return (<Typography variant="h6" gutterBottom>counted {useSelector(state => state.counted)}</Typography>);
+}
 
 const styles = (theme) => ({
     fabButton: {
@@ -139,14 +144,13 @@ class ProductList extends Component {
 
         const { classes } = this.props;
         const { counter, itemCounter } = this.state;
-        this.context = this.shopingBag
-        console.log(this.context)
 
         return (
             <List className={classes.list}>
                 {products.map((product) => (
                     <Fragment key={product.id}>
                         <ListItem className={classes.listItem}>
+                            <Counted />
                             <Grid container alignItems="center">
                                 <Grid item xs={1}>
                                     <img className={classes.img} alt={product.name} src={product.image} />
