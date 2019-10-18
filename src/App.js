@@ -17,6 +17,9 @@ import Review from './Review';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 
+import { Provider } from './Context'
+
+
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -103,6 +106,7 @@ export default function Checkout() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const popOverID = open ? 'simple-popover' : undefined;
+  const user = { name: 'Tania', loggedIn: true }
 
   return (
     <React.Fragment>
@@ -132,7 +136,9 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                <Provider value={user}>
+                  {getStepContent(activeStep)}
+                </Provider>
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>Back</Button>

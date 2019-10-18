@@ -6,6 +6,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+import C from './Context'
+
 
 const styles = (theme) => ({
     fabButton: {
@@ -123,9 +125,6 @@ class ProductList extends Component {
 
             localStorage.setItem('shoppingbag', JSON.stringify(this.shopingBag));
 
-
-            console.log({...previousState.counter})
-
             return ({counter: { ...previousState.counter, [product.id]: --previousState.counter[product.id]}});
         });
     }
@@ -134,10 +133,14 @@ class ProductList extends Component {
         return product.product_type === check;
     }
 
+    static contextType = C
+
     render() {
 
         const { classes } = this.props;
         const { counter, itemCounter } = this.state;
+        this.context = this.shopingBag
+        console.log(this.context)
 
         return (
             <List className={classes.list}>
