@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useContext } from 'react';
 import { products }  from './bikerentals.json';
 import { withStyles, Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -6,12 +6,30 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import C from './Context'
 
 import { useSelector } from 'react-redux';
+import { AppContext } from './context/AppContext';
 
 function Counted() {
     return (<Typography variant="h6" gutterBottom>counted {useSelector(state => state.counted)}</Typography>);
+}
+
+function Storedd({payload, counter}) {
+
+    const [store, setStore] = useContext(AppContext);
+
+    const addStore = data => {
+
+        data.counter = counter[data.id];
+        setStore(prevStore => ({...prevStore, [data.id]: data }));
+    }
+
+    return (
+      <Fragment>
+        <button onClick={() => addStore(payload)}>+</button>
+        <Typography variant="h6" gutterBottom>Payment method {payload.id}</Typography>
+      </Fragment>
+    );
 }
 
 const styles = (theme) => ({
@@ -77,29 +95,29 @@ class ProductList extends Component {
     }
 
     componentDidMount() {
-        localStorage.setItem('shoppingbag', '');
+        // localStorage.setItem('shoppingbag', '');
         localStorage.setItem('itemCounter', 0);
     }
 
     increment = (product) => {
         this.setState(previousState => {
 
-            let localCounter = previousState.counter[product.id];
+            // let localCounter = previousState.counter[product.id];
 
-            this.shopingBag[product.id] = {
-                productType: product.product_type,
-                productName: product.name,
-                productPrice: product.price,
-                productImage: product.image,
-                productCounter: ++localCounter || 1
-            }
+            // this.shopingBag[product.id] = {
+            //     productType: product.product_type,
+            //     productName: product.name,
+            //     productPrice: product.price,
+            //     productImage: product.image,
+            //     productCounter: ++localCounter || 1
+            // }
 
             if(this.bikeChecker(product, 'bike')) {
                 ++previousState.itemCounter;
                 localStorage.setItem('itemCounter', previousState.itemCounter);
             }
 
-            localStorage.setItem('shoppingbag', JSON.stringify(this.shopingBag));
+            //localStorage.setItem('shoppingbag', JSON.stringify(this.shopingBag));
 
             return ({counter: { ...previousState.counter, [product.id]: ++previousState.counter[product.id] || 1}});
         });
@@ -107,28 +125,28 @@ class ProductList extends Component {
 
     decrement = (product) => {
         this.setState(previousState => {
-            let localCounter = previousState.counter[product.id];
+            // let localCounter = previousState.counter[product.id];
 
-            this.shopingBag[product.id] = {
-                productType: product.product_type,
-                productName: product.name,
-                productPrice: product.price,
-                productImage: product.image,
-                productCounter: --localCounter
-            }
+            // this.shopingBag[product.id] = {
+            //     productType: product.product_type,
+            //     productName: product.name,
+            //     productPrice: product.price,
+            //     productImage: product.image,
+            //     productCounter: --localCounter
+            // }
 
-            if (!localCounter) delete this.shopingBag[product.id];
+            // if (!localCounter) delete this.shopingBag[product.id];
 
             if(this.bikeChecker(product, 'bike')) { --previousState.itemCounter; }
 
             if(this.state.itemCounter === 0) {
-                previousState.counter = {};
+                // previousState.counter = {};
                 localStorage.setItem('itemCounter', 0);
-                localStorage.setItem('shoppingbag', '');
-                this.shopingBag = {};
+                // localStorage.setItem('shoppingbag', '');
+                // this.shopingBag = {};
             }
 
-            localStorage.setItem('shoppingbag', JSON.stringify(this.shopingBag));
+            // localStorage.setItem('shoppingbag', JSON.stringify(this.shopingBag));
 
             return ({counter: { ...previousState.counter, [product.id]: --previousState.counter[product.id]}});
         });
@@ -137,8 +155,6 @@ class ProductList extends Component {
     bikeChecker = (product, check) =>  {
         return product.product_type === check;
     }
-
-    static contextType = C
 
     render() {
 
@@ -151,6 +167,7 @@ class ProductList extends Component {
                     <Fragment key={product.id}>
                         <ListItem className={classes.listItem}>
                             <Counted />
+                            <Storedd payload={product} counter={this.state.counter} />
                             <Grid container alignItems="center">
                                 <Grid item xs={1}>
                                     <img className={classes.img} alt={product.name} src={product.image} />

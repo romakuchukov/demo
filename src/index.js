@@ -5,6 +5,8 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import allReducers from './reducers';
 
+import { AppProvider } from './context/AppContext';
+
 import * as serviceWorker from './serviceWorker';
 
 let store = createStore(
@@ -12,7 +14,7 @@ let store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><AppProvider><App/></AppProvider></Provider>, document.getElementById('root'));
 
 if(module.hot) { module.hot.accept() }
 
