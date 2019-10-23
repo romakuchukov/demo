@@ -60,14 +60,14 @@ const styles = (theme) => ({
 const ProductList = (props) => {
     const {classes} = props;
     const [store, setStore] = useContext(AppContext);
-    const count = Object.keys(store).length;
 
     useEffect(() => {
+        if(!Object.keys(store).length) {
+            setStore(prevStore => ({ ...prevStore, ['itemCounter']: 0 }));
+            products.forEach(product => setStore(prevStore => ({ ...prevStore, [product.id]: { counter: 0 }})))
+        }
 
-        setStore(prevStore => ({ ...prevStore, ['itemCounter']: 0 }));
-        products.forEach(product => setStore(prevStore => ({ ...prevStore, [product.id]: { counter: 0 }})))
-
-    }, [count, setStore])
+    }, [store, setStore])
 
     const isBike = (product_type, check) => {
         return product_type === check;
@@ -79,7 +79,7 @@ const ProductList = (props) => {
             setStore(prevStore => ({...prevStore, itemCounter: prevStore.itemCounter+1}));
         }
 
-        setStore(prevStore => ({...prevStore, [product.id]: {counter: prevStore[product.id].counter+1 || 1}}));
+        setStore(prevStore => ({...prevStore, [product.id]: {counter: prevStore[product.id].counter+1 || 1, product}}));
     }
 
     const decrement = (product) => {
@@ -88,7 +88,12 @@ const ProductList = (props) => {
             setStore(prevStore => ({...prevStore, itemCounter: prevStore.itemCounter ? prevStore.itemCounter-1 : prevStore.itemCounter }));
         }
 
+        if(store.itemCounter-1 === 0) clearAll()
+
         setStore(prevStore => ({ ...prevStore, [product.id]: { counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0}}));
+    }
+    const clearAll = () => {
+        products.forEach(product => setStore(prevStore => ({ ...prevStore, [product.id]: { counter: 0 }})))
     }
 
     const disableIncremnt = (product) => !store.itemCounter && !isBike(product.product_type, 'bike');

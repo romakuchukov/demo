@@ -59,7 +59,7 @@ const Review = (props) => {
     return (
         <List className={classes.list}>
         {Object.keys(shoppingbag).map(key => (
-            <ListItem className={classes.listItem} key={shoppingbag[key].id}>
+            <ListItem className={classes.listItem} key={key}>
                 <Typography variant="h4" className={classes.typography}>
                     <img className={classes.image} src={shoppingbag[key].image} alt={shoppingbag[key].name} />
                     <span className={classes.span}>{shoppingbag[key].name}: ${shoppingbag[key].price} * {shoppingbag[key].counter} = <b>${shoppingbag[key].price * shoppingbag[key].counter}</b></span>
