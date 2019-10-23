@@ -51,24 +51,26 @@ const styles = (theme) => ({
     }
 });
 
-
 const Review = (props) => {
 
     const { classes } = props;
     const [shoppingbag] = useContext(AppContext);
+
     return (
         <List className={classes.list}>
         {Object.keys(shoppingbag).map(key => (
-            <ListItem className={classes.listItem} key={key}>
+            shoppingbag[key] && shoppingbag[key].product ? (
+                <ListItem className={classes.listItem} key={key}>
                 <Typography variant="h4" className={classes.typography}>
-                    <img className={classes.image} src={shoppingbag[key].image} alt={shoppingbag[key].name} />
-                    <span className={classes.span}>{shoppingbag[key].name}: ${shoppingbag[key].price} * {shoppingbag[key].counter} = <b>${shoppingbag[key].price * shoppingbag[key].counter}</b></span>
+                    <img className={classes.image} src={shoppingbag[key].product.image} alt={shoppingbag[key].product.name} />
+                    <span className={classes.span}>{shoppingbag[key].product.name}: ${shoppingbag[key].product.price} * {shoppingbag[key].counter} = <b>${shoppingbag[key].product.price * shoppingbag[key].counter}</b></span>
                 </Typography>
             </ListItem>
+            ) : ('')
         ))}
         <Divider className={classes.divider} />
         <Typography className={classes.total} variant="h4">
-            <b>Total: ${Object.keys(shoppingbag).reduce((total, key) => (total += shoppingbag[key].price * shoppingbag[key].counter), 0).toFixed(2)}</b>
+            <b>Total: ${Object.keys(shoppingbag).reduce((total=0, key) => (total = total + (shoppingbag[key].product ? shoppingbag[key].product.price * shoppingbag[key].counter : 0)), 0).toFixed(2)}</b>
         </Typography>
     </List>
     );
