@@ -1,38 +1,10 @@
-import React, { Component, useContext } from 'react';
-import Typography from '@material-ui/core/Typography';
+import React, { useContext } from 'react';
 import { withStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-
-import Storer from './Storer';
-
 import { AppContext } from './context/AppContext';
-
-
-function Shoppingbag(props) {
-
-    const { classes } = props;
-    const [shoppingbag] = useContext(AppContext);
-
-    return (
-        <List className={classes.list}>
-        {Object.keys(shoppingbag).map(key => (
-            <ListItem className={classes.listItem} key={shoppingbag[key].id}>
-                <Typography variant="h4" className={classes.typography}>
-                    {console.log(shoppingbag[key])}
-                    <img className={classes.image} src={shoppingbag[key].image} alt={shoppingbag[key].name} />
-                    <span className={classes.span}>{shoppingbag[key].name}: ${shoppingbag[key].price} * {shoppingbag[key].counter} = <b>${shoppingbag[key].price * shoppingbag[key].counter}</b></span>
-                </Typography>
-            </ListItem>
-        ))}
-        <Divider className={classes.divider} />
-        <Typography className={classes.total} variant="h4">
-            <b>Total: ${Object.keys(shoppingbag).reduce((total, key) => (total += shoppingbag[key].price * shoppingbag[key].counter), 0).toFixed(2)}</b>
-        </Typography>
-    </List>
-    );
-}
 
 const styles = (theme) => ({
     divider: {
@@ -79,40 +51,27 @@ const styles = (theme) => ({
     }
 });
 
-class Review extends Component {
-    state = {
-        shoppingbag: [],
-        total: 0
-    }
 
-    componentDidMount(){
-        this.setState({
-            //shoppingbag : Object.keys(JSON.parse(localStorage.getItem('shoppingbag'))).map(key => JSON.parse(localStorage.getItem('shoppingbag'))[key])
-        });
-    }
+const Review = (props) => {
 
-    render(){
-        const { classes } = this.props;
-        const { shoppingbag } = this.state;
-        return (
-            // <List className={classes.list}>
-            //     {shoppingbag.map(product => (
-            //         <ListItem className={classes.listItem} key={product.productName}>
-            //             <Typography variant="h4" className={classes.typography}>
-            //                 <Storer />
-            //                 <img className={classes.image} src={product.productImage} alt={product.productName} />
-            //                 <span className={classes.span}>{product.productName}: ${product.productPrice} * {product.productCounter} = <b>${product.productPrice * product.productCounter}</b></span>
-            //             </Typography>
-            //         </ListItem>
-            //     ))}
-            //     <Divider className={classes.divider} />
-            //     <Typography className={classes.total} variant="h4">
-            //         <b>Total: ${shoppingbag.reduce((total, product) => (total += product.productPrice * product.productCounter), 0).toFixed(2)}</b>
-            //     </Typography>
-            // </List>
-            <Shoppingbag classes={this.props}/>
-        );
-    }
+    const { classes } = props;
+    const [shoppingbag] = useContext(AppContext);
+    return (
+        <List className={classes.list}>
+        {Object.keys(shoppingbag).map(key => (
+            <ListItem className={classes.listItem} key={shoppingbag[key].id}>
+                <Typography variant="h4" className={classes.typography}>
+                    <img className={classes.image} src={shoppingbag[key].image} alt={shoppingbag[key].name} />
+                    <span className={classes.span}>{shoppingbag[key].name}: ${shoppingbag[key].price} * {shoppingbag[key].counter} = <b>${shoppingbag[key].price * shoppingbag[key].counter}</b></span>
+                </Typography>
+            </ListItem>
+        ))}
+        <Divider className={classes.divider} />
+        <Typography className={classes.total} variant="h4">
+            <b>Total: ${Object.keys(shoppingbag).reduce((total, key) => (total += shoppingbag[key].price * shoppingbag[key].counter), 0).toFixed(2)}</b>
+        </Typography>
+    </List>
+    );
 }
 
 export default withStyles(styles)(Review);

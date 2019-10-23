@@ -5,32 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
 
-import { useSelector } from 'react-redux';
 import { AppContext } from './context/AppContext';
-
-function Counted() {
-    return (<Typography variant="h6" gutterBottom>counted {useSelector(state => state.counted)}</Typography>);
-}
-
-function Storedd({payload, counter}) {
-
-    const [store, setStore] = useContext(AppContext);
-
-    const addStore = data => {
-
-        data.counter = counter[data.id];
-        setStore(prevStore => ({...prevStore, [data.id]: data }));
-    }
-
-    return (
-      <Fragment>
-        <button onClick={() => addStore(payload)}>+</button>
-        <Typography variant="h6" gutterBottom>Payment method {payload.id}</Typography>
-      </Fragment>
-    );
-}
 
 const styles = (theme) => ({
     fabButton: {
@@ -85,110 +61,83 @@ const styles = (theme) => ({
     }
 });
 
+function Stored({product, classes}) {
+    const [store, setStore] = useContext(AppContext);
+
+    const isBike = (product_type, check) => {
+        return product_type === check;
+    }
+
+    const init = (id) => {
+        if (Object.keys(store).length === 0) {
+            setStore(prevStore => ({ ...prevStore, ['itemCounter']: 0 }));
+            setStore(prevStore => ({ ...prevStore, [id]: { counter: 0 }}));
+        }
+    }
+
+    const increment = (product) => {
+
+        if(isBike(product.product_type, 'bike')) {
+            setStore(prevStore => ({...prevStore, itemCounter: prevStore.itemCounter+1}));
+        }
+
+        setStore(prevStore => ({...prevStore, [product.id]: {counter: prevStore[product.id].counter+1 || 1}}));
+    }
+
+    const decrement = (product) => {
+
+        if(isBike(product.product_type, 'bike')) {
+            setStore(prevStore => ({...prevStore, itemCounter: prevStore.itemCounter ? prevStore.itemCounter-1 : prevStore.itemCounter }));
+        }
+
+        setStore(prevStore => ({ ...prevStore, [product.id]: { counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0}}));
+    }
+
+    const disableIncremnt = () => !store.itemCounter && !isBike(product.product_type, 'bike');
+    const disableDecrement = () => ((store[product.id] && store.itemCounter) ? store[product.id].counter : false);
+    const counter = () => (store[product.id] ? store[product.id].counter : 0);
+
+    init(product.id);
+
+    return (
+      <Fragment>
+        {product && product.id ? (
+            <ListItem className={classes.listItem}>
+                <Grid container alignItems="center">
+                    <Grid item xs={1}>
+                        <img className={classes.img} alt={product.name} src={product.image} />
+                    </Grid>
+                    <Grid item xs={8} className={classes.text}>
+                        <Typography variant="h6" className={classes.typography}>{product.name}</Typography>
+                        <Typography variant="h5" className={classes.typography}>${product.price}</Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={() => increment(product)} disabled={disableIncremnt()} className={classes.fabButton} size="small" color="secondary" variant="contained">+</Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button className={classes.button}>{counter()}</Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={() => decrement(product)} disabled={!disableDecrement()} className={classes.fabButton} size="small" color="primary" variant="contained">-</Button>
+                    </Grid>
+                </Grid>
+            </ListItem>
+        ):('')}
+      </Fragment>
+    );
+}
+
+
 class ProductList extends Component {
-
-    shopingBag = {};
-
-    state = {
-        counter: {},
-        itemCounter: 0
-    }
-
-    componentDidMount() {
-        // localStorage.setItem('shoppingbag', '');
-        localStorage.setItem('itemCounter', 0);
-    }
-
-    increment = (product) => {
-        this.setState(previousState => {
-
-            // let localCounter = previousState.counter[product.id];
-
-            // this.shopingBag[product.id] = {
-            //     productType: product.product_type,
-            //     productName: product.name,
-            //     productPrice: product.price,
-            //     productImage: product.image,
-            //     productCounter: ++localCounter || 1
-            // }
-
-            if(this.bikeChecker(product, 'bike')) {
-                ++previousState.itemCounter;
-                localStorage.setItem('itemCounter', previousState.itemCounter);
-            }
-
-            //localStorage.setItem('shoppingbag', JSON.stringify(this.shopingBag));
-
-            return ({counter: { ...previousState.counter, [product.id]: ++previousState.counter[product.id] || 1}});
-        });
-    }
-
-    decrement = (product) => {
-        this.setState(previousState => {
-            // let localCounter = previousState.counter[product.id];
-
-            // this.shopingBag[product.id] = {
-            //     productType: product.product_type,
-            //     productName: product.name,
-            //     productPrice: product.price,
-            //     productImage: product.image,
-            //     productCounter: --localCounter
-            // }
-
-            // if (!localCounter) delete this.shopingBag[product.id];
-
-            if(this.bikeChecker(product, 'bike')) { --previousState.itemCounter; }
-
-            if(this.state.itemCounter === 0) {
-                // previousState.counter = {};
-                localStorage.setItem('itemCounter', 0);
-                // localStorage.setItem('shoppingbag', '');
-                // this.shopingBag = {};
-            }
-
-            // localStorage.setItem('shoppingbag', JSON.stringify(this.shopingBag));
-
-            return ({counter: { ...previousState.counter, [product.id]: --previousState.counter[product.id]}});
-        });
-    }
-
-    bikeChecker = (product, check) =>  {
-        return product.product_type === check;
-    }
 
     render() {
 
         const { classes } = this.props;
-        const { counter, itemCounter } = this.state;
 
         return (
             <List className={classes.list}>
-                {products.map((product) => (
-                    <Fragment key={product.id}>
-                        <ListItem className={classes.listItem}>
-                            <Counted />
-                            <Storedd payload={product} counter={this.state.counter} />
-                            <Grid container alignItems="center">
-                                <Grid item xs={1}>
-                                    <img className={classes.img} alt={product.name} src={product.image} />
-                                </Grid>
-                                <Grid item xs={8} className={classes.text}>
-                                    <Typography variant="h6" className={classes.typography}>{product.name}</Typography>
-                                    <Typography variant="h5" className={classes.typography}>${product.price}</Typography>
-                                </Grid>
-                                <Grid item xs={1}>
-                                    <Button disabled={!itemCounter && !this.bikeChecker(product, 'bike')} onClick={() => this.increment(product)} size="small" color="secondary" variant="contained" className={classes.fabButton}>+</Button>
-                                </Grid>
-                                <Grid item xs={1}>
-                                    <Button className={classes.button}>{counter[product.id] || 0}</Button>
-                                </Grid>
-                                <Grid item xs={1}>
-                                    <Button onClick={() => this.decrement(product)} size="small" color="primary" variant="contained" disabled={!counter[product.id]} className={classes.fabButton}>-</Button>
-                                </Grid>
-                            </Grid>
-                        </ListItem>
-                        <Divider />
-                    </Fragment>
+                {products.map(product => (
+                    <Stored key={product.id} product={product} classes={classes} />
                 ))}
             </List>
         );

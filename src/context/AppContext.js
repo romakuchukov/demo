@@ -6,9 +6,5 @@ export const AppProvider = props => {
 
     const [store, setStore] = useState({});
 
-    return (
-        <AppContext.Provider value={[store, setStore]}>
-            {props.children}
-        </AppContext.Provider>
-    );
+    return (<AppContext.Provider value={[store, setStore]}>{props.children}</AppContext.Provider>);
 }
