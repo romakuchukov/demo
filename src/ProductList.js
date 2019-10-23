@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { products }  from './bikerentals.json';
 import { withStyles, Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -23,10 +23,6 @@ const styles = (theme) => ({
         '&:hover': {
             background: 'none'
         }
-    },
-    counter: {
-        textAlign: 'center',
-        fontSize: 30
     },
     list: {
         marginBottom: theme.spacing(1),
@@ -61,18 +57,20 @@ const styles = (theme) => ({
     }
 });
 
-function Stored({product, classes}) {
+const ProductList = (props) => {
+    const {classes} = props;
     const [store, setStore] = useContext(AppContext);
+    const count = Object.keys(store).length;
+
+    useEffect(() => {
+
+        setStore(prevStore => ({ ...prevStore, ['itemCounter']: 0 }));
+        products.forEach(product => setStore(prevStore => ({ ...prevStore, [product.id]: { counter: 0 }})))
+
+    }, [count, setStore])
 
     const isBike = (product_type, check) => {
         return product_type === check;
-    }
-
-    const init = (id) => {
-        if (Object.keys(store).length === 0) {
-            setStore(prevStore => ({ ...prevStore, ['itemCounter']: 0 }));
-            setStore(prevStore => ({ ...prevStore, [id]: { counter: 0 }}));
-        }
     }
 
     const increment = (product) => {
@@ -93,55 +91,36 @@ function Stored({product, classes}) {
         setStore(prevStore => ({ ...prevStore, [product.id]: { counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0}}));
     }
 
-    const disableIncremnt = () => !store.itemCounter && !isBike(product.product_type, 'bike');
-    const disableDecrement = () => ((store[product.id] && store.itemCounter) ? store[product.id].counter : false);
-    const counter = () => (store[product.id] ? store[product.id].counter : 0);
-
-    init(product.id);
+    const disableIncremnt = (product) => !store.itemCounter && !isBike(product.product_type, 'bike');
+    const disableDecrement = (product) => ((store[product.id] && store.itemCounter) ? store[product.id].counter : false);
+    const counter = (product) => (store[product.id] ? store[product.id].counter : 0);
 
     return (
-      <Fragment>
-        {product && product.id ? (
-            <ListItem className={classes.listItem}>
-                <Grid container alignItems="center">
-                    <Grid item xs={1}>
-                        <img className={classes.img} alt={product.name} src={product.image} />
+        <List className={classes.list}>
+            {products.map(product => (
+               <ListItem className={classes.listItem} key={product.id}>
+                    <Grid container alignItems="center">
+                        <Grid item xs={1}>
+                            <img className={classes.img} alt={product.name} src={product.image} />
+                        </Grid>
+                        <Grid item xs={8} className={classes.text}>
+                            <Typography variant="h6" className={classes.typography}>{product.name}</Typography>
+                            <Typography variant="h5" className={classes.typography}>${product.price}</Typography>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Button onClick={() => increment(product)} disabled={disableIncremnt(product)} className={classes.fabButton} size="small" color="secondary" variant="contained">+</Button>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Button className={classes.button}>{counter(product)}</Button>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Button onClick={() => decrement(product)} disabled={!disableDecrement(product)} className={classes.fabButton} size="small" color="primary" variant="contained">-</Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={8} className={classes.text}>
-                        <Typography variant="h6" className={classes.typography}>{product.name}</Typography>
-                        <Typography variant="h5" className={classes.typography}>${product.price}</Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <Button onClick={() => increment(product)} disabled={disableIncremnt()} className={classes.fabButton} size="small" color="secondary" variant="contained">+</Button>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <Button className={classes.button}>{counter()}</Button>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <Button onClick={() => decrement(product)} disabled={!disableDecrement()} className={classes.fabButton} size="small" color="primary" variant="contained">-</Button>
-                    </Grid>
-                </Grid>
-            </ListItem>
-        ):('')}
-      </Fragment>
+                </ListItem>
+            ))}
+        </List>
     );
-}
-
-
-class ProductList extends Component {
-
-    render() {
-
-        const { classes } = this.props;
-
-        return (
-            <List className={classes.list}>
-                {products.map(product => (
-                    <Stored key={product.id} product={product} classes={classes} />
-                ))}
-            </List>
-        );
-    }
 }
 
 export default withStyles(styles)(ProductList);
