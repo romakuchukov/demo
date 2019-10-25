@@ -67,9 +67,7 @@ const ProductList = (props) => {
         }
     });
 
-    const isBike = (product_type, check) => {
-        return product_type === check;
-    }
+    const isBike = (product_type, check) => product_type === check;
 
     const increment = (product) => {
         if(isBike(product.product_type, 'bike')) {
