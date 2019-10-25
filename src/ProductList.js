@@ -62,8 +62,7 @@ const ProductList = (props) => {
     const [store, setStore] = useContext(AppContext);
 
     useEffect(() => {
-        if(!Object.keys(store).length) {
-            setStore(prevStore => ({ ...prevStore, ['itemCounter']: 0 }));
+        if(Object.keys(store).length === 1) {
             products.forEach(product => setStore(prevStore => ({ ...prevStore, [product.id]: { counter: 0 }})))
         }
     });
@@ -73,7 +72,6 @@ const ProductList = (props) => {
     }
 
     const increment = (product) => {
-
         if(isBike(product.product_type, 'bike')) {
             setStore(prevStore => ({...prevStore, itemCounter: prevStore.itemCounter+1}));
         }
@@ -87,7 +85,8 @@ const ProductList = (props) => {
             setStore(prevStore => ({...prevStore, itemCounter: prevStore.itemCounter ? prevStore.itemCounter-1 : prevStore.itemCounter }));
         }
 
-        setStore(prevStore => ({ ...prevStore, [product.id]: { counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0}}));
+        setStore(prevStore => ({ ...prevStore, [product.id]: { counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0, product: prevStore[product.id].product} }));
+
         if(store.itemCounter-1 === 0) { clearAll(); }
 
     }

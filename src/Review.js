@@ -55,7 +55,7 @@ const Review = (props) => {
 
     const { classes } = props;
     const [shoppingbag] = useContext(AppContext);
-
+    console.log(shoppingbag)
     return (
         <List className={classes.list}>
         {Object.keys(shoppingbag).map(key => (
