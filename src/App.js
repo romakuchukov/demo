@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, Fragment } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,6 +16,9 @@ import ProductList from './ProductList';
 import Review from './Review';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
+import ThankYouMessage from './ThankYouMessage';
+
+import { AppContext } from './context/AppContext';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -71,24 +74,21 @@ const steps = ['Select a product', 'Review your purchase', 'Shipping address', '
 function getStepContent(step) {
   switch (step) {
     case 0: return <ProductList />;
-    case 1: return <Review />;
-    case 2: return <AddressForm />;
-    case 3: return <PaymentForm />;
+    case 1: return <AddressForm />;
+    case 2: return <PaymentForm />;
+    case 3: return <Review />;
     default:throw new Error('Unknown step');
   }
 }
 
-export default function Checkout() {
+const Checkout = () => {
+  const [shoppingbag] = useContext(AppContext);
+
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = (event) => {
-    if(!parseInt(localStorage.getItem('itemCounter'), 10)) {
-      setAnchorEl(event.currentTarget);
-      return;
-    }
-    setActiveStep(activeStep + 1);
-
+    (!shoppingbag.itemCounter) ? setAnchorEl(event.currentTarget) : setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
@@ -104,7 +104,7 @@ export default function Checkout() {
   const popOverID = open ? 'simple-popover' : undefined;
 
   return (
-    <React.Fragment>
+    <Fragment>
       <CssBaseline />
       <AppBar position="absolute" color="primary" className={classes.appBar}>
         <Toolbar>
@@ -123,14 +123,11 @@ export default function Checkout() {
               </Step>
             ))}
           </Stepper>
-          <React.Fragment>
+          <Fragment>
             {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>Thank you for your order.</Typography>
-                <Typography variant="subtitle1">Your order number is #2001539. We have emailed your order confirmation, and will send you an update when your order has shipped.</Typography>
-              </React.Fragment>
+              <ThankYouMessage />
             ) : (
-              <React.Fragment>
+              <Fragment>
                   {getStepContent(activeStep)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
@@ -143,12 +140,13 @@ export default function Checkout() {
                     <Typography className={classes.typography}>Please add at least one bike.</Typography>
                   </Popover>
                 </div>
-              </React.Fragment>
+              </Fragment>
             )}
-          </React.Fragment>
+          </Fragment>
         </Paper>
         <Typography variant="body2" color="textSecondary" align="center">{'Copyright © '}Roma Inc.{' '}{new Date().getFullYear()}{'.'}</Typography>
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 }
+export default Checkout;
