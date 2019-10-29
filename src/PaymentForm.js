@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Fragment, Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -15,12 +15,12 @@ function Counted() {
 
 
     return (
-      <React.Fragment>
+      <Fragment>
         <button onClick={() => dispatch(increment(3))}>+</button>
         <Typography variant="h6" gutterBottom>Payment method {counted} {isLogged}</Typography>
         <button onClick={() => dispatch(decrement())}>-</button>
         <hr/>
-      </React.Fragment>
+      </Fragment>
     );
 }
 
@@ -28,7 +28,7 @@ export default class PaymentForm extends Component {
 
   render(){
     return (
-      <React.Fragment>
+      <Fragment>
         <Typography variant="h6" gutterBottom>Payment method</Typography>
         <Counted />
         <Grid container spacing={3}>
@@ -48,7 +48,7 @@ export default class PaymentForm extends Component {
             <FormControlLabel control={<Checkbox color="secondary" name="saveCard" value="yes" />} label="Remember credit card details for next time" />
           </Grid>
         </Grid>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
