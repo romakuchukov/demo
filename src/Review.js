@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -14,30 +14,20 @@ const styles = (theme) => ({
     },
     total:{
         textAlign: 'right',
-        [theme.breakpoints.down(650)]: {
-            fontSize: '1.2rem'
-        },
-        [theme.breakpoints.down(550)]: {
-            fontSize: '1rem'
-        }
+        [theme.breakpoints.down(650)]: { fontSize: '1.2rem' },
+        [theme.breakpoints.down(550)]: { fontSize: '1rem' }
 
     },
     typography: {
-        [theme.breakpoints.down(650)]: {
-            fontSize: '1.2rem'
-        },
-        [theme.breakpoints.down(550)]: {
-            fontSize: '1rem'
-        }
+        [theme.breakpoints.down(650)]: { fontSize: '1.2rem' },
+        [theme.breakpoints.down(550)]: { fontSize: '1rem' }
     },
     image: {
         width:'100%',
         height:'auto',
         maxWidth: '70px',
         float: 'left',
-        [theme.breakpoints.down(750)]: {
-            display: 'none'
-        }
+        [theme.breakpoints.down(750)]: { display: 'none' }
     },
     span: {
         float: 'left',
@@ -54,7 +44,7 @@ const styles = (theme) => ({
 const Review = (props) => {
 
     const { classes } = props;
-    const [shoppingbag] = useContext(AppContext);
+    const [shoppingbag] = React.useContext(AppContext);
 
     return (
         <List className={classes.list}>

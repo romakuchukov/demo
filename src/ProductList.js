@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { products }  from './bikerentals.json';
 import { withStyles, Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -20,9 +20,7 @@ const styles = (theme) => ({
         cursor: 'default',
         width: '100%',
         minWidth: '100%',
-        '&:hover': {
-            background: 'none'
-        }
+        '&:hover': { background: 'none' }
     },
     list: {
         marginBottom: theme.spacing(1),
@@ -48,9 +46,7 @@ const styles = (theme) => ({
         padding: theme.spacing(0, 2)
     },
     typography: {
-        [theme.breakpoints.down(400)]: {
-            fontSize: '1rem'
-        }
+        [theme.breakpoints.down(400)]: { fontSize: '1rem' }
     },
     grid: {
         textAlign: 'right'
@@ -59,9 +55,9 @@ const styles = (theme) => ({
 
 const ProductList = (props) => {
     const {classes} = props;
-    const [store, setStore] = useContext(AppContext);
+    const [store, setStore] = React.useContext(AppContext);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if(Object.keys(store).length === 1) {
             products.forEach(product => setStore(prevStore => ({ ...prevStore, [product.id]: { counter: 0 }})))
         }
@@ -83,7 +79,10 @@ const ProductList = (props) => {
             setStore(prevStore => ({...prevStore, itemCounter: prevStore.itemCounter ? prevStore.itemCounter-1 : prevStore.itemCounter }));
         }
 
-        setStore(prevStore => ({ ...prevStore, [product.id]: { counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0, product: prevStore[product.id].product} }));
+        setStore(prevStore => {
+
+            return { ...prevStore, [product.id]: { counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0, product: prevStore[product.id].product} }
+        });
 
         if(store.itemCounter-1 === 0) { clearAll(); }
 

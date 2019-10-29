@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,9 +21,7 @@ import ThankYouMessage from './ThankYouMessage';
 import { AppContext } from './context/AppContext';
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: 'relative',
-  },
+  appBar: { position: 'relative' },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing(2),
@@ -47,14 +45,10 @@ const useStyles = makeStyles(theme => ({
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
-    [theme.breakpoints.down(290)]: {
-      display: 'none'
-  }
+    [theme.breakpoints.down(290)]: { display: 'none' }
   },
   steplabelInner: {
-    [theme.breakpoints.down(600)]: {
-        display: 'none'
-    }
+    [theme.breakpoints.down(600)]: { display: 'none' }
   },
   buttons: {
     display: 'flex',
@@ -64,9 +58,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
-  typography: {
-    padding: theme.spacing(2),
-  },
+  typography: { padding: theme.spacing(2) },
 }));
 
 const steps = ['Select a product', 'Review your purchase', 'Shipping address', 'Payment details'];
@@ -82,7 +74,7 @@ function getStepContent(step) {
 }
 
 const Checkout = () => {
-  const [shoppingbag] = useContext(AppContext);
+  const [shoppingbag] = React.useContext(AppContext);
 
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -91,13 +83,10 @@ const Checkout = () => {
     (!shoppingbag.itemCounter) ? setAnchorEl(event.currentTarget) : setActiveStep(activeStep + 1);
   };
 
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+  const handleBack = () => setActiveStep(activeStep - 1);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => setAnchorEl(null);
+
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
