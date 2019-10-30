@@ -63,7 +63,7 @@ const useStyles = makeStyles(theme => ({
 
 const steps = ['Select a product', 'Review your purchase', 'Shipping address', 'Payment details'];
 
-function getStepContent(step) {
+const getStepContent = (step) => {
   switch (step) {
     case 0: return <ProductList />;
     case 1: return <AddressForm />;
@@ -112,24 +112,22 @@ const Checkout = () => {
               </Step>
             ))}
           </Stepper>
-          <Fragment>
-            {activeStep === steps.length ? (
-              <ThankYouMessage />
-            ) : (
-              <Fragment>
-                  {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (<Button onClick={handleBack} className={classes.button}>Back</Button>)}
-                  <Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
-                  <Popover id={popOverID} open={open} anchorEl={anchorEl} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} transformOrigin={{ vertical: 'top', horizontal: 'right' }}>
-                    <Typography className={classes.typography}>Please add at least one bike.</Typography>
-                  </Popover>
-                </div>
-              </Fragment>
-            )}
-          </Fragment>
+          {activeStep === steps.length ? (
+            <ThankYouMessage />
+          ) : (
+            <Fragment>
+              {getStepContent(activeStep)}
+              <div className={classes.buttons}>
+                {activeStep !== 0 && (<Button onClick={handleBack} className={classes.button}>Back</Button>)}
+                <Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                </Button>
+                <Popover id={popOverID} open={open} anchorEl={anchorEl} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} transformOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                  <Typography className={classes.typography}>Please add at least one bike.</Typography>
+                </Popover>
+              </div>
+            </Fragment>
+          )}
         </Paper>
         <Typography variant="body2" color="textSecondary" align="center">{'Copyright © '}Roma Inc.{' '}{new Date().getFullYear()}{'.'}</Typography>
       </div>
