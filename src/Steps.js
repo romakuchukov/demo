@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(3, 0, 5),
       [theme.breakpoints.down(290)]: { display: 'none' }
     },
-    steplabelInner: {
+    stepLabel: {
         [theme.breakpoints.down(600)]: { display: 'none' }
     }
 }));
@@ -27,7 +27,7 @@ const Steps = ({steps, activeStep}) => {
             <Stepper activeStep={activeStep} className={classes.stepper}>
                 {steps.map(label => (
                     <Step key={label}>
-                        <StepLabel><div className={classes.steplabelInner}>{label}</div></StepLabel>
+                        <StepLabel><div className={classes.stepLabel}>{label}</div></StepLabel>
                     </Step>
                 ))}
             </Stepper>
