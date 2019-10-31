@@ -7,10 +7,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import ActiveStep from './ActiveStep';
-
 import Steps from './Steps';
-
+import ActiveStep from './ActiveStep';
 import ThankYouMessage from './ThankYouMessage';
 
 const useStyles = makeStyles(theme => ({
