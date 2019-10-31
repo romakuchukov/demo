@@ -48,7 +48,6 @@ const ActiveStep = ({steps, activeStep, setActiveStep}) => {
 
     const handleClose = () => setAnchorEl(null);
 
-
     const open = Boolean(anchorEl);
     const popOverID = open ? 'simple-popover' : undefined;
 

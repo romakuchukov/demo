@@ -42,6 +42,7 @@ const Checkout = () => {
 
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const active = {steps, activeStep, setActiveStep};
 
   return (
     <Fragment>
@@ -53,12 +54,8 @@ const Checkout = () => {
       </AppBar>
       <div className={classes.layout}>
         <Paper className={classes.paper}>
-          <Steps steps={steps} activeStep={activeStep} />
-          {activeStep !== steps.length ? (
-            <ActiveStep steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} />
-          ):(
-            <ThankYouMessage />
-          )}
+          <Steps {...active} />
+          {activeStep !== steps.length ? (<ActiveStep {...active} />) : (<ThankYouMessage />)}
         </Paper>
         <Typography variant="body2" color="textSecondary" align="center">{'Copyright © '}Roma Inc.{' '}{new Date().getFullYear()}{'.'}</Typography>
       </div>
