@@ -41,7 +41,7 @@ const getStepContent = (step) => {
 
 const ActiveStep = ({steps, activeStep, setActiveStep}) => {
 
-    const classes = useStyles();
+    const {buttons, button, typography} = useStyles();
 
     const [shoppingbag] = React.useContext(AppContext);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -60,13 +60,13 @@ const ActiveStep = ({steps, activeStep, setActiveStep}) => {
     return(
         <Fragment>
             {getStepContent(activeStep)}
-            <div className={classes.buttons}>
-                {activeStep !== 0 && (<Button onClick={handleBack} className={classes.button}>Back</Button>)}
-                <Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+            <div className={buttons}>
+                {activeStep !== 0 && (<Button onClick={handleBack} className={button}>Back</Button>)}
+                <Button variant="contained" color="primary" onClick={handleNext} className={button}>
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                 </Button>
                 <Popover id={popOverID} open={open} anchorEl={anchorEl} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} transformOrigin={{ vertical: 'top', horizontal: 'right' }}>
-                    <Typography className={classes.typography}>Please add at least one bike.</Typography>
+                    <Typography className={typography}>Please add at least one bike.</Typography>
                 </Popover>
             </div>
       </Fragment>

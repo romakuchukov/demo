@@ -19,15 +19,15 @@ const useStyles = makeStyles(theme => ({
 
 const Steps = ({steps, activeStep}) => {
 
-    const classes = useStyles();
+    const {stepper, stepLabel} = useStyles();
 
     return(
         <Fragment>
             <Typography component="h1" variant="h4" align="center">{steps[activeStep]}</Typography>
-            <Stepper activeStep={activeStep} className={classes.stepper}>
+            <Stepper activeStep={activeStep} className={stepper}>
                 {steps.map(label => (
                     <Step key={label}>
-                        <StepLabel><div className={classes.stepLabel}>{label}</div></StepLabel>
+                        <StepLabel><div className={stepLabel}>{label}</div></StepLabel>
                     </Step>
                 ))}
             </Stepper>

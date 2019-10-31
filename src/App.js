@@ -40,22 +40,23 @@ const steps = ['Select a product', 'Shipping address', 'Payment details', 'Revie
 
 const Checkout = () => {
 
-  const classes = useStyles();
+  const {appBar, layout, paper} = useStyles();
+
   const [activeStep, setActiveStep] = React.useState(0);
-  const active = {steps, activeStep, setActiveStep};
+  const props = {steps, activeStep, setActiveStep};
 
   return (
     <Fragment>
       <CssBaseline />
-      <AppBar position="absolute" color="primary" className={classes.appBar}>
+      <AppBar position="absolute" color="primary" className={appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>Roma Inc.</Typography>
         </Toolbar>
       </AppBar>
-      <div className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Steps {...active} />
-          {activeStep !== steps.length ? (<ActiveStep {...active} />) : (<ThankYouMessage />)}
+      <div className={layout}>
+        <Paper className={paper}>
+          <Steps {...props} />
+          {(activeStep !== steps.length) ? (<ActiveStep {...props} />) : (<ThankYouMessage />)}
         </Paper>
         <Typography variant="body2" color="textSecondary" align="center">{'Copyright © '}Roma Inc.{' '}{new Date().getFullYear()}{'.'}</Typography>
       </div>
