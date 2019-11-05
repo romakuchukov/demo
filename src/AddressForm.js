@@ -10,15 +10,13 @@ import { InfoContext } from './context/InfoContext';
 const AddressForm = () => {
     const [info, setInfo] = React.useContext(InfoContext);
 
-    const update = (e, name) => {
-        const { value } = e.target;
-        setInfo(prevState => ({...prevState, shippingInfo: {...prevState.shippingInfo, [name]:value} }));
+    const setStore = (name, value) => {
+      setInfo(prevState => ({...prevState, shippingInfo: {...prevState.shippingInfo, [name]:value} }));
     }
 
-    const toggle = (e, name) => {
-        const { checked } = e.target;
-        setInfo(prevState => ({...prevState, shippingInfo: {...prevState.shippingInfo, [name]:checked} }));
-    }
+    const update = (e, name) => { setStore(name, e.target.value); }
+
+    const toggle = (e, name) => { setStore(name, e.target.checked); }
 
     const { firstName, lastName, address1, address2, city, state, zip, country, saveAddress } = info.shippingInfo;
 
