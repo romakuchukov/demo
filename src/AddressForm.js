@@ -27,28 +27,28 @@ const AddressForm = () => {
         <Typography variant="h6" gutterBottom>Shipping address</Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <TextField required value={firstName} onChange={(e) => update(e, 'firstName')} label="First name" fullWidth />
+            <TextField value={firstName} onChange={(e) => update(e, 'firstName')} label="First name" fullWidth />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField required value={lastName} onChange={(e) => update(e, 'lastName')} label="Last name" fullWidth />
+            <TextField value={lastName} onChange={(e) => update(e, 'lastName')} label="Last name" fullWidth />
           </Grid>
           <Grid item xs={12}>
-            <TextField required value={address1} onChange={(e) => update(e, 'address1')} label="Address line 1" fullWidth />
+            <TextField value={address1} onChange={(e) => update(e, 'address1')} label="Address line 1" fullWidth />
           </Grid>
           <Grid item xs={12}>
             <TextField value={address2} onChange={(e) => update(e, 'address2')} label="Address line 2" fullWidth />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField required value={city} onChange={(e) => update(e, 'city')} label="City" fullWidth />
+            <TextField value={city} onChange={(e) => update(e, 'city')} label="City" fullWidth />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField value={state} onChange={(e) => update(e, 'state')} label="State/Province/Region" fullWidth />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField required value={zip} onChange={(e) => update(e, 'zip')} label="Zip / Postal code" fullWidth />
+            <TextField value={zip} onChange={(e) => update(e, 'zip')} label="Zip / Postal code" fullWidth />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField required value={country} onChange={(e) => update(e, 'country')} label="Country" fullWidth />
+            <TextField value={country} onChange={(e) => update(e, 'country')} label="Country" fullWidth />
           </Grid>
           <Grid item xs={12}>
             <FormControlLabel control={<Checkbox checked={saveAddress} onChange={(e) => toggle(e, 'saveAddress')} color="secondary" />} label="Use this address for payment details" />
@@ -57,4 +57,5 @@ const AddressForm = () => {
       </Fragment>
     );
 }
+
 export default AddressForm;
