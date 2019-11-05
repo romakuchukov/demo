@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -12,6 +12,7 @@ import PaymentForm from './PaymentForm';
 import Review from './Review';
 
 import { AppContext } from './context/AppContext';
+import { InfoProvider } from './context/InfoContext';
 
 const useStyles = makeStyles(theme => ({
     stepper: {
@@ -37,7 +38,7 @@ const getStepContent = (step) => {
       case 3: return <Review />;
       default:throw new Error('Unknown step');
     }
-  }
+}
 
 const ActiveStep = ({steps, activeStep, setActiveStep}) => {
 
@@ -58,7 +59,7 @@ const ActiveStep = ({steps, activeStep, setActiveStep}) => {
     const handleBack = () => setActiveStep(activeStep - 1);
 
     return(
-        <Fragment>
+        <InfoProvider>
             {getStepContent(activeStep)}
             <div className={buttons}>
                 {activeStep !== 0 && (<Button onClick={handleBack} className={button}>Back</Button>)}
@@ -69,7 +70,7 @@ const ActiveStep = ({steps, activeStep, setActiveStep}) => {
                     <Typography className={typography}>Please add at least one bike.</Typography>
                 </Popover>
             </div>
-      </Fragment>
+        </InfoProvider>
     );
 }
 
