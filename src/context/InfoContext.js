@@ -16,7 +16,13 @@ export const InfoProvider = props => {
             country: '',
             saveAddress: false
         },
-        paymentInfo:{}
+        paymentInfo:{
+            cvv: '',
+            expDate: '',
+            cardName: '',
+            cardNumber: '',
+            saveCard: false
+        }
     });
 
     return (<InfoContext.Provider value={[info, setInfo]}>{props.children}</InfoContext.Provider>);
