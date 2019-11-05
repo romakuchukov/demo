@@ -15,8 +15,9 @@ const AddressForm = () => {
         setInfo(prevState => ({...prevState, shippingInfo: {...prevState.shippingInfo, [name]:value} }));
     }
 
-        console.log(value)
-        setInfo(prevState => ({...prevState, shippingInfo: {...prevState.shippingInfo, [name]:value} }));
+    const toggle = (e, name) => {
+        const { checked } = e.target;
+        setInfo(prevState => ({...prevState, shippingInfo: {...prevState.shippingInfo, [name]:checked} }));
     }
 
     const { firstName, lastName, address1, address2, city, state, zip, country, saveAddress } = info.shippingInfo;
@@ -50,7 +51,7 @@ const AddressForm = () => {
             <TextField required value={country} onChange={(e) => update(e, 'country')} label="Country" fullWidth />
           </Grid>
           <Grid item xs={12}>
-            <FormControlLabel control={<Checkbox onChange={(e) => update(e, 'saveAddress')} color="secondary" name="saveAddress" value={saveAddress} />} label="Use this address for payment details" />
+            <FormControlLabel control={<Checkbox checked={saveAddress} onChange={(e) => toggle(e, 'saveAddress')} color="secondary" />} label="Use this address for payment details" />
           </Grid>
         </Grid>
       </Fragment>
