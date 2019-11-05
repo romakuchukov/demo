@@ -11,12 +11,12 @@ const AddressForm = () => {
 
     const [info, setInfo] = React.useContext(InfoContext);
 
-    const setStore = (name, value) => {
+    const setStore = (value, name) => {
       setInfo(prevState => ({...prevState, shippingInfo: {...prevState.shippingInfo, [name]:value} }));
     }
 
-    const update = (e, name) => { setStore(name, e.target.value); }
-    const toggle = (e, name) => { setStore(name, e.target.checked); }
+    const update = (e, name) => { setStore(e.target.value, name); }
+    const toggle = (e, name) => { setStore(e.target.checked, name); }
 
     const { firstName, lastName, address1, address2, city, state, zip, country, saveAddress } = info.shippingInfo;
 
