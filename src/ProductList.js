@@ -80,15 +80,12 @@ const ProductList = (props) => {
         }
 
         setStore(prevStore => {
-
+            if(prevStore.itemCounter === 0) { clearCounters(); }
             return { ...prevStore, [product.id]: { counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0, product: prevStore[product.id].product} }
         });
-
-        if(store.itemCounter-1 === 0) { clearAll(); }
-
     }
 
-    const clearAll = () => {
+    const clearCounters = () => {
         products.forEach(product => setStore(prevStore => ({ ...prevStore, [product.id]: { counter: 0 }})))
     }
 
