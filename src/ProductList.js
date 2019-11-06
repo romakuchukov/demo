@@ -5,22 +5,17 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
+import InputBase from '@material-ui/core/InputBase';
+
 
 import { AppContext } from './context/AppContext';
 
 const styles = (theme) => ({
-    fabButton: {
-      zIndex: 1,
-      margin: '0 auto',
-      width: '100%',
-      minWidth: '100%',
-    },
-    button: {
+    inputBase: {
         fontSize: '150%',
-        cursor: 'default',
-        width: '100%',
-        minWidth: '100%',
-        '&:hover': { background: 'none' }
+        textAlign: 'center',
+        padding: theme.spacing(0, 1),
+        '& input': { textAlign: 'center' }
     },
     list: {
         marginBottom: theme.spacing(1),
@@ -106,13 +101,13 @@ const ProductList = (props) => {
                             <Typography variant="h5" className={classes.typography}>${product.price}</Typography>
                         </Grid>
                         <Grid item xs={1}>
-                            <Button onClick={() => increment(product)} disabled={disableIncremnt(product)} className={classes.fabButton} size="small" color="secondary" variant="contained">+</Button>
+                            <Button onClick={() => increment(product)} disabled={disableIncremnt(product)} size="small" color="secondary" variant="contained">+</Button>
                         </Grid>
                         <Grid item xs={1}>
-                            <Button className={classes.button}>{counter(product)}</Button>
+                            <InputBase value={counter(product)} onChange={() => counter(product)} className={classes.inputBase} />
                         </Grid>
                         <Grid item xs={1}>
-                            <Button onClick={() => decrement(product)} disabled={!disableDecrement(product)} className={classes.fabButton} size="small" color="primary" variant="contained">-</Button>
+                            <Button onClick={() => decrement(product)} disabled={!disableDecrement(product)} size="small" color="primary" variant="contained">-</Button>
                         </Grid>
                     </Grid>
                 </ListItem>
