@@ -1,11 +1,6 @@
 import React, { Fragment } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import Step from '@material-ui/core/Step';
-import Stepper from '@material-ui/core/Stepper';
-import StepLabel from '@material-ui/core/StepLabel';
-import Typography from '@material-ui/core/Typography';
+import { Step, Stepper, StepLabel, Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     stepper: {
