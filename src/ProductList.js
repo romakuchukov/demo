@@ -1,11 +1,6 @@
-import React from 'react';
+import React/*, { useState }*/ from 'react';
 import { products }  from './bikerentals.json';
-import { withStyles, Button } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Grid from '@material-ui/core/Grid';
-import InputBase from '@material-ui/core/InputBase';
+import { List, Grid, Button, ListItem, InputBase, Typography, withStyles } from '@material-ui/core';
 
 //hhttps://stackoverflow.com/a/41736336
 

@@ -1,15 +1,13 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { Button, Popover, Typography } from '@material-ui/core';
 
-import Button from '@material-ui/core/Button';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
 
 import ProductList from './ProductList';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
-import Review from './Review';
+import Review      from './Review';
 
 import { AppContext } from './context/AppContext';
 import { InfoProvider } from './context/InfoContext';
@@ -42,7 +40,7 @@ const getStepContent = (step) => {
 
 const ActiveStep = ({steps, activeStep, setActiveStep}) => {
 
-    const {buttons, button, typography} = useStyles();
+    const { buttons, button, typography } = useStyles();
 
     const [shoppingbag] = React.useContext(AppContext);
     const [anchorEl, setAnchorEl] = React.useState(null);
