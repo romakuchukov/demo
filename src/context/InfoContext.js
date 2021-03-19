@@ -2,7 +2,7 @@ import React from 'react';
 
 export const InfoContext = React.createContext();
 
-export const InfoProvider = props => {
+export const InfoProvider = ({ children }) => {
 
     const [info, setInfo] = React.useState({
         shippingInfo: {
@@ -25,5 +25,5 @@ export const InfoProvider = props => {
         }
     });
 
-    return (<InfoContext.Provider value={[info, setInfo]}>{props.children}</InfoContext.Provider>);
+    return (<InfoContext.Provider value={[info, setInfo]}>{children}</InfoContext.Provider>);
 }

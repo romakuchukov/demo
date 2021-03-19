@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Grid, Checkbox, TextField, Typography, FormControlLabel } from '@material-ui/core';
-import { InfoProvider } from './context';
+import { InfoContext } from './context';
 
 function Counted() {
 

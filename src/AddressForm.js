@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { Grid, Checkbox, Typography, TextField, FormControlLabel } from '@material-ui/core';
-import { InfoProvider } from './context';
+import { InfoContext } from './context';
 
 
 const AddressForm = () => {
 
-    const [info, setInfo] = React.useContext(InfoProvider);
+    const [info, setInfo] = React.useContext(InfoContext);
 
     const setStore = (value, name) => {
       setInfo(prevState => ({...prevState, shippingInfo: {...prevState.shippingInfo, [name]:value} }));
