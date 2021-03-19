@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
 import InputBase from '@material-ui/core/InputBase';
 
+//hhttps://stackoverflow.com/a/41736336
 
 import { AppContext } from './context/AppContext';
 
@@ -63,7 +64,7 @@ const ProductList = (props) => {
     const increment = (product) => {
         if(isBike(product.product_type, 'bike')) {
             setStore(prevStore => ({
-                ..prevStore,
+                ...prevStore,
                 itemCounter: prevStore.itemCounter+1
             }));
         }
@@ -75,7 +76,7 @@ const ProductList = (props) => {
                 product
     }
         }));
-    }
+    };
 
     const decrement = (product) => {
 
@@ -96,7 +97,7 @@ const ProductList = (props) => {
                 }
             }
         });
-    }
+    };
 
     const clearCounters = () => {
         products.forEach(product => setStore(prevStore => ({

@@ -7,20 +7,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import { InfoContext } from './context/InfoContext';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement } from './actions';
 
 function Counted() {
-    const counted = useSelector(state => state.counted);
-    const isLogged = useSelector(state => state.isLogged);
-    const dispatch = useDispatch();
-
 
     return (
       <Fragment>
-        <button onClick={() => dispatch(increment(3))}>+</button>
-        <Typography variant="h6" gutterBottom>Payment method {counted} {isLogged}</Typography>
-        <button onClick={() => dispatch(decrement())}>-</button>
+        <button onClick={() => console.log('increment')}>+</button>
+        <Typography variant="h6" gutterBottom>Payment method {'counted'} {'isLogged'}</Typography>
+        <button onClick={() => console.log('decrement')}>-</button>
         <hr/>
       </Fragment>
     );
