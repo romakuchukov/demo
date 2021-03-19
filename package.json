@@ -32,8 +32,8 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^6.1.0",
     "acorn": "^7.0.0",
+    "eslint": "^7.22.0",
     "typescript": "*"
   }
 }
