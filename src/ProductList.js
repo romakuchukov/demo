@@ -74,7 +74,7 @@ const ProductList = (props) => {
             [product.id]: {
                 counter: prevStore[product.id].counter+1 || 1,
                 product
-    }
+            }
         }));
     };
 
