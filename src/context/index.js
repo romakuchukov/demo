@@ -1,2 +1,2 @@
 export { AppContext, AppProvider } from './AppContext';
-export { InfoProvider } from './InfoContext';
+export { InfoProvider, InfoContext } from './InfoContext';
