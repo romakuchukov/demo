@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 
 import { Paper, AppBar, Toolbar, Typography, CssBaseline, makeStyles } from '@material-ui/core';
 
+import { AppProvider, InfoProvider } from './context';
+
 import Steps from './Steps';
 import ActiveStep from './ActiveStep';
 import ThankYouMessage from './ThankYouMessage';
@@ -41,21 +43,23 @@ const Checkout = () => {
   const props = {steps, activeStep, setActiveStep};
 
   return (
-    <Fragment>
-      <CssBaseline />
-      <AppBar position="absolute" color="primary" className={appBar}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>Roma Inc.</Typography>
-        </Toolbar>
-      </AppBar>
-      <div className={layout}>
-        <Paper className={paper}>
-          <Steps {...props} />
-          {(activeStep !== steps.length) ? (<ActiveStep {...props} />) : (<ThankYouMessage />)}
-        </Paper>
-        <Typography variant="body2" color="textSecondary" align="center">{'Copyright © '}Roma Inc.{' '}{new Date().getFullYear()}{'.'}</Typography>
-      </div>
-    </Fragment>
+    <AppProvider>
+      <InfoProvider>
+        <CssBaseline />
+        <AppBar position="absolute" color="primary" className={appBar}>
+          <Toolbar>
+            <Typography variant="h6" color="inherit" noWrap>Roma Inc.</Typography>
+          </Toolbar>
+        </AppBar>
+        <div className={layout}>
+          <Paper className={paper}>
+            <Steps {...props} />
+            {(activeStep !== steps.length) ? (<ActiveStep {...props} />) : (<ThankYouMessage />)}
+          </Paper>
+          <Typography variant="body2" color="textSecondary" align="center">{'Copyright © '}Roma Inc.{' '}{new Date().getFullYear()}{'.'}</Typography>
+        </div>
+      </InfoProvider>
+    </AppProvider>
   );
 }
 
