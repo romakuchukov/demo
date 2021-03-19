@@ -1,10 +1,10 @@
 import React/*, { useState }*/ from 'react';
 import { products }  from './bikerentals.json';
 import { List, Grid, Button, ListItem, InputBase, Typography, withStyles } from '@material-ui/core';
+import { AppContext } from './context';
 
-//hhttps://stackoverflow.com/a/41736336
+//https://stackoverflow.com/a/41736336
 
-import { AppContext } from './context/AppContext';
 
 const styles = (theme) => ({
     inputBase: {
@@ -131,6 +131,6 @@ const ProductList = (props) => {
             ))}
         </List>
     );
-}
+};
 
 export default withStyles(styles)(ProductList);

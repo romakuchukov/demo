@@ -1,16 +1,13 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, Popover, Typography } from '@material-ui/core';
-
+import { Button, Popover, Typography, makeStyles } from '@material-ui/core';
 
 import ProductList from './ProductList';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review      from './Review';
 
-import { AppContext } from './context/AppContext';
-import { InfoProvider } from './context/InfoContext';
+import { AppContext, InfoProvider } from './context';
 
 const useStyles = makeStyles(theme => ({
     stepper: {

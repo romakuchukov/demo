@@ -1,11 +1,6 @@
 import React, { Fragment } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import { Paper, AppBar, Toolbar, Typography, CssBaseline, makeStyles } from '@material-ui/core';
 
 import Steps from './Steps';
 import ActiveStep from './ActiveStep';
@@ -63,4 +58,5 @@ const Checkout = () => {
     </Fragment>
   );
 }
+
 export default Checkout;

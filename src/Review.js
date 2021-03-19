@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Divider, ListItem, Typography, withStyles } from '@material-ui/core';
-import { AppContext } from './context/AppContext';
+import { AppContext } from './context';
 
 const styles = (theme) => ({
     divider: {
