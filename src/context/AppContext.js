@@ -4,7 +4,7 @@ export const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
 
-    const [store, setStore] = React.useState({ itemCounter: 0 });
+  const [store, setStore] = React.useState({ itemCounter: 0 });
 
-    return (<AppContext.Provider value={[store, setStore]}>{children}</AppContext.Provider>);
-}
+  return <AppContext.Provider value={[store, setStore]}>{children}</AppContext.Provider>;
+};

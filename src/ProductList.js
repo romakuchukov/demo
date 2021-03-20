@@ -7,142 +7,143 @@ import { AppContext } from './context';
 
 
 const styles = (theme) => ({
-    inputBase: {
-        fontSize: '150%',
-        textAlign: 'center',
-        padding: theme.spacing(0, 1),
-        '& input': { textAlign: 'center' }
-    },
-    list: {
-        marginBottom: theme.spacing(1),
-        padding: theme.spacing(0)
-    },
-    listItem : {
-        padding: theme.spacing(1, 0)
-    },
-    paper: {
-        padding: theme.spacing(0, 0, 0),
-        margin: 'auto',
-    },
-    img: {
-        margin: 'auto',
-        display: 'block',
-        width: '100%',
-        height: 'auto',
-        maxWidth: '200px',
-        maxHeight: '200px',
-        marginRight: '10px',
-    },
-    text: {
-        padding: theme.spacing(0, 2)
-    },
-    typography: {
-        [theme.breakpoints.down(400)]: { fontSize: '1rem' }
-    },
-    grid: {
-        textAlign: 'right'
-    }
+  inputBase: {
+    fontSize: '150%',
+    textAlign: 'center',
+    padding: theme.spacing(0, 1),
+    '& input': { textAlign: 'center' }
+  },
+  list: {
+    marginBottom: theme.spacing(1),
+    padding: theme.spacing(0)
+  },
+  listItem : {
+    padding: theme.spacing(1, 0)
+  },
+  paper: {
+    padding: theme.spacing(0, 0, 0),
+    margin: 'auto',
+  },
+  img: {
+    margin: 'auto',
+    display: 'block',
+    width: '100%',
+    height: 'auto',
+    maxWidth: '200px',
+    maxHeight: '200px',
+    marginRight: '10px',
+  },
+  text: {
+    padding: theme.spacing(0, 2)
+  },
+  typography: {
+    [theme.breakpoints.down(400)]: { fontSize: '1rem' }
+  },
+  grid: {
+    textAlign: 'right'
+  }
 });
 
 const ProductList = (props) => {
-    const { classes } = props;
-    const [store, setStore] = React.useContext(AppContext);
+  const { classes } = props;
+  const [store, setStore] = React.useContext(AppContext);
 
-    React.useEffect(() => {
-        if(Object.keys(store).length === 1) {
-            products.forEach(product => setStore(prevStore => ({ ...prevStore, [product.id]: { counter: 0 }})))
+  React.useEffect(() => {
+    if(Object.keys(store).length === 1) {
+      products.forEach(product => setStore(prevStore => ({
+        ...prevStore,
+        [product.id]: { counter: 0 }
+      })));
+    }
+  });
+
+  const isBike = (product_type, check) => product_type === check;
+
+  const increment = (product) => {
+    if(isBike(product.product_type, 'bike')) {
+      setStore(prevStore => ({
+        ...prevStore,
+        itemCounter: prevStore.itemCounter+1
+      }));
+    }
+
+    setStore(prevStore => ({
+      ...prevStore,
+      [product.id]: {
+        product,
+        counter: prevStore[product.id].counter+1 || 1
+      }
+    }));
+  };
+
+  const decrement = (product) => {
+
+    if(isBike(product.product_type, 'bike')) {
+      setStore(prevStore => ({
+        ...prevStore,
+        itemCounter: prevStore.itemCounter ? prevStore.itemCounter-1 : prevStore.itemCounter
+      }));
+    }
+
+    setStore(prevStore => {
+      if(prevStore.itemCounter === 0) { clearCounters(); }
+      return {
+        ...prevStore,
+        [product.id]: {
+          counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0,
+          product: prevStore[product.id].product
         }
+      }
     });
+  };
 
-    const isBike = (product_type, check) => product_type === check;
+  const clearCounters = () => {
+    products.forEach(product => setStore(prevStore => ({
+      ...prevStore,
+      [product.id]: { counter: 0 }
+    })));
+  };
 
-    const increment = (product) => {
-        if(isBike(product.product_type, 'bike')) {
-            setStore(prevStore => ({
-                ...prevStore,
-                itemCounter: prevStore.itemCounter+1
-            }));
-        }
+  const disableIncrement = (product) => !store.itemCounter && !isBike(product.product_type, 'bike');
+  const disableDecrement = (product) => (store[product.id] && store.itemCounter) ? store[product.id].counter : false;
 
-        setStore(prevStore => ({
-            ...prevStore,
-            [product.id]: {
-                counter: prevStore[product.id].counter+1 || 1,
-                product
-            }
-        }));
-    };
+  const onCounter = (e, product) => {
+    console.log(e.target);
 
-    const decrement = (product) => {
+    if(store[product.id]) {
+      console.log(e.target.value)
+      console.log(store[product.id].counter)
+    }
+  };
 
-        if(isBike(product.product_type, 'bike')) {
-            setStore(prevStore => ({
-                ...prevStore,
-                itemCounter: prevStore.itemCounter ? prevStore.itemCounter-1 : prevStore.itemCounter
-            }));
-        }
+  const count = (product) => store[product.id] ? store[product.id].counter : 0;
 
-        setStore(prevStore => {
-            if(prevStore.itemCounter === 0) { clearCounters(); }
-            return {
-                ...prevStore,
-                [product.id]: {
-                    counter: prevStore.itemCounter ? prevStore[product.id].counter-1 : 0,
-                    product: prevStore[product.id].product
-                }
-            }
-        });
-    };
-
-    const clearCounters = () => {
-        products.forEach(product => setStore(prevStore => ({
-            ...prevStore,
-            [product.id]: { counter: 0 }
-        })));
-    };
-
-    const disableIncrement = (product) => !store.itemCounter && !isBike(product.product_type, 'bike');
-    const disableDecrement = (product) => (store[product.id] && store.itemCounter) ? store[product.id].counter : false;
-
-    const onCounter = (e, product) => {
-        console.log(e.target);
-
-        if(store[product.id]) {
-            console.log(e.target.value)
-            console.log(store[product.id].counter)
-        }
-    };
-
-    const count = (product) => {
-        return store[product.id] ? store[product.id].counter : 0;
-    };
-
-    return (
-        <List className={classes.list}>
-            {products.map(product => (
-               <ListItem className={classes.listItem} key={product.id}>
-                    <Grid container alignItems="center">
-                        <Grid item xs={1}>
-                            <img className={classes.img} alt={product.name} src={product.image} />
-                        </Grid>
-                        <Grid item xs={8} className={classes.text}>
-                            <Typography variant="h6" className={classes.typography}>{product.name}</Typography>
-                            <Typography variant="h5" className={classes.typography}>${product.price}</Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Button onClick={() => increment(product)} disabled={disableIncrement(product)} size="small" color="secondary" variant="contained">+</Button>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <InputBase value={count(product)} onChange={(e) => onCounter(e, product)} className={classes.inputBase} />
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Button onClick={() => decrement(product)} disabled={!disableDecrement(product)} size="small" color="primary" variant="contained">-</Button>
-                        </Grid>
-                    </Grid>
-                </ListItem>
-            ))}
-        </List>
-    );
+  return (
+    <List className={classes.list}>
+      {products.map(product => (
+        <ListItem className={classes.listItem} key={product.id}>
+          <Grid container alignItems="center">
+            <Grid item xs={1}>
+              <img className={classes.img} alt={product.name} src={product.image} />
+            </Grid>
+            <Grid item xs={8} className={classes.text}>
+              <Typography variant="h6" className={classes.typography}>{product.name}</Typography>
+              <Typography variant="h5" className={classes.typography}>${product.price}</Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <Button onClick={() => increment(product)} disabled={disableIncrement(product)} size="small" color="secondary" variant="contained">+</Button>
+            </Grid>
+            <Grid item xs={1}>
+              <InputBase value={count(product)} onChange={(e) => onCounter(e, product)} className={classes.inputBase} />
+            </Grid>
+            <Grid item xs={1}>
+              <Button onClick={() => decrement(product)} disabled={!disableDecrement(product)} size="small" color="primary" variant="contained">-</Button>
+            </Grid>
+          </Grid>
+        </ListItem>
+      ))}
+    </List>
+  );
 };
 
 export default withStyles(styles)(ProductList);

@@ -10,19 +10,19 @@ import Review      from './Review';
 import { AppContext } from './context';
 
 const useStyles = makeStyles(theme => ({
-    stepper: {
-      padding: theme.spacing(3, 0, 5),
-      [theme.breakpoints.down(290)]: { display: 'none' }
-    },
-    buttons: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-    },
-    button: {
-      marginTop: theme.spacing(3),
-      marginLeft: theme.spacing(1),
-    },
-    typography: { padding: theme.spacing(2) },
+  stepper: {
+    padding: theme.spacing(3, 0, 5),
+    [theme.breakpoints.down(290)]: { display: 'none' }
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
+  typography: { padding: theme.spacing(2) },
 }));
 
 const getStepContent = (step) => {
@@ -48,7 +48,7 @@ const ActiveStep = ({steps, activeStep, setActiveStep}) => {
   const popOverID = open ? 'simple-popover' : undefined;
 
   const handleNext = (event) => {
-      (!shoppingbag.itemCounter) ? setAnchorEl(event.currentTarget) : setActiveStep(activeStep + 1);
+    (!shoppingbag.itemCounter) ? setAnchorEl(event.currentTarget) : setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => setActiveStep(activeStep - 1);
@@ -67,6 +67,6 @@ const ActiveStep = ({steps, activeStep, setActiveStep}) => {
       </div>
     </Fragment>
   );
-}
+};
 
 export default ActiveStep;

@@ -7,11 +7,16 @@ const PaymentForm = () => {
   const [info, setInfo] = React.useContext(InfoContext);
 
   const setStore = (value, name) => {
-    setInfo(prevState => ({...prevState, paymentInfo: {...prevState.paymentInfo, [name]:value} }));
+    setInfo(prevState => ({
+      ...prevState,
+      paymentInfo: {
+        ...prevState.paymentInfo, [name]:value
+      }
+    }));
   }
 
-  const update = (e, name) => { setStore(e.target.value, name); }
-  const toggle = (e, name) => { setStore(e.target.checked, name); }
+  const update = (e, name) => { setStore(e.target.value, name); };
+  const toggle = (e, name) => { setStore(e.target.checked, name); };
 
   const { cardName, cardNumber, expDate, cvv, saveCard } = info.paymentInfo;
     return (
@@ -36,6 +41,6 @@ const PaymentForm = () => {
         </Grid>
       </Fragment>
     );
-}
+};
 
 export default PaymentForm;
