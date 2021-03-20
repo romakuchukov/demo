@@ -99,11 +99,23 @@ const ProductList = (props) => {
             ...prevStore,
             [product.id]: { counter: 0 }
         })));
-    }
+    };
 
-    const disableIncremnt = (product) => !store.itemCounter && !isBike(product.product_type, 'bike');
-    const disableDecrement = (product) => ((store[product.id] && store.itemCounter) ? store[product.id].counter : false);
-    const counter = (product) => (store[product.id] ? store[product.id].counter : 0);
+    const disableIncrement = (product) => !store.itemCounter && !isBike(product.product_type, 'bike');
+    const disableDecrement = (product) => (store[product.id] && store.itemCounter) ? store[product.id].counter : false;
+
+    const onCounter = (e, product) => {
+        console.log(e.target);
+
+        if(store[product.id]) {
+            console.log(e.target.value)
+            console.log(store[product.id].counter)
+        }
+    };
+
+    const count = (product) => {
+        return store[product.id] ? store[product.id].counter : 0;
+    };
 
     return (
         <List className={classes.list}>
@@ -118,10 +130,10 @@ const ProductList = (props) => {
                             <Typography variant="h5" className={classes.typography}>${product.price}</Typography>
                         </Grid>
                         <Grid item xs={1}>
-                            <Button onClick={() => increment(product)} disabled={disableIncremnt(product)} size="small" color="secondary" variant="contained">+</Button>
+                            <Button onClick={() => increment(product)} disabled={disableIncrement(product)} size="small" color="secondary" variant="contained">+</Button>
                         </Grid>
                         <Grid item xs={1}>
-                            <InputBase value={counter(product)} onChange={() => counter(product)} className={classes.inputBase} />
+                            <InputBase value={count(product)} onChange={(e) => onCounter(e, product)} className={classes.inputBase} />
                         </Grid>
                         <Grid item xs={1}>
                             <Button onClick={() => decrement(product)} disabled={!disableDecrement(product)} size="small" color="primary" variant="contained">-</Button>
