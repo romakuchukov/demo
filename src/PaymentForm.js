@@ -2,18 +2,6 @@ import React, { Fragment } from 'react';
 import { Grid, Checkbox, TextField, Typography, FormControlLabel } from '@material-ui/core';
 import { InfoContext } from './context';
 
-function Counted() {
-
-    return (
-      <Fragment>
-        <button onClick={() => console.log('increment')}>+</button>
-        <Typography variant="h6" gutterBottom>Payment method {'counted'} {'isLogged'}</Typography>
-        <button onClick={() => console.log('decrement')}>-</button>
-        <hr/>
-      </Fragment>
-    );
-}
-
 const PaymentForm = () => {
 
   const [info, setInfo] = React.useContext(InfoContext);
@@ -29,7 +17,6 @@ const PaymentForm = () => {
     return (
       <Fragment>
         <Typography variant="h6" gutterBottom>Payment method</Typography>
-        <Counted />
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <TextField value={cardName} onChange={(e) => update(e, 'cardName')} id="cardName" label="Name on card" fullWidth />
