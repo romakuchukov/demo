@@ -108,15 +108,18 @@ const ProductList = (props) => {
   const disableDecrement = (product) => (store[product.id] && store.itemCounter) ? store[product.id].counter : false;
 
   const onCounter = (e, product) => {
-    console.log(e.target);
 
-    if(store[product.id]) {
-      console.log(e.target.value)
-      console.log(store[product.id].counter)
-    }
+    const counter = parseInt(e.target.value, 10);
+
+    //check if one number, set to empty string on backspace
+    setStore(prevStore => ({
+        ...prevStore,
+        [product.id]: {
+          product: prevStore[product.id].product,
+          counter: !Number.isNaN(counter) ? counter : '',
+        }
+    }));
   };
-
-  const count = (product) => store[product.id] ? store[product.id].counter : 0;
 
   return (
     <List className={classes.list}>
@@ -134,7 +137,7 @@ const ProductList = (props) => {
               <Button onClick={() => increment(product)} disabled={disableIncrement(product)} size="small" color="secondary" variant="contained">+</Button>
             </Grid>
             <Grid item xs={1}>
-              <InputBase value={count(product)} onChange={(e) => onCounter(e, product)} className={classes.inputBase} />
+              <InputBase value={store[product.id].counter} onChange={(e) => onCounter(e, product)} className={classes.inputBase} />
             </Grid>
             <Grid item xs={1}>
               <Button onClick={() => decrement(product)} disabled={!disableDecrement(product)} size="small" color="primary" variant="contained">-</Button>
