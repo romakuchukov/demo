@@ -104,7 +104,7 @@ const ProductList = (props) => {
   };
 
   const disableIncrement = (product) => !store.itemCounter && !isBike(product.product_type, 'bike');
-  const disableDecrement = (product) => !!(store[product.id] && store.itemCounter);
+  const disableDecrement = (product) =>!((store[product.id] && !!store.itemCounter) ? !!store[product.id].counter : false);
 
   const onCounter = (e, product) => {
 
@@ -139,7 +139,7 @@ const ProductList = (props) => {
               <InputBase value={store[product.id].counter} onChange={(e) => onCounter(e, product)} className={classes.inputBase} />
             </Grid>
             <Grid item xs={1}>
-              <Button onClick={() => decrement(product)} disabled={!disableDecrement(product)} size="small" color="primary" variant="contained">-</Button>
+              <Button onClick={() => decrement(product)} disabled={disableDecrement(product)} size="small" color="primary" variant="contained">-</Button>
             </Grid>
           </Grid>
         </ListItem>
