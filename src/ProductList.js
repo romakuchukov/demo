@@ -1,10 +1,9 @@
-import React/*, { useState }*/ from 'react';
+import React, { useState } from 'react';
 import { products }  from './bikerentals.json';
 import { List, Grid, Button, ListItem, InputBase, Typography, withStyles } from '@material-ui/core';
 import { AppContext } from './context';
 
 //https://stackoverflow.com/a/41736336
-
 
 const styles = (theme) => ({
   inputBase: {
@@ -105,7 +104,7 @@ const ProductList = (props) => {
   };
 
   const disableIncrement = (product) => !store.itemCounter && !isBike(product.product_type, 'bike');
-  const disableDecrement = (product) => (store[product.id] && store.itemCounter) ? store[product.id].counter : false;
+  const disableDecrement = (product) => !!(store[product.id] && store.itemCounter);
 
   const onCounter = (e, product) => {
 
